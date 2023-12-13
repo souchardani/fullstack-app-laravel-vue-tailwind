@@ -4,7 +4,7 @@ const store = createStore({
     state: {
         user: {
             data: { name: "Daniel" },
-            token: null,
+            token: 13213,
         },
     },
     getters: {},
