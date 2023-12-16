@@ -13,7 +13,7 @@
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="#" method="POST">
+        <form class="space-y-6" @submit="register">
             <div>
                 <label
                     for="fullname"
@@ -22,6 +22,7 @@
                 >
                 <div class="mt-2">
                     <input
+                        v-model="user.name"
                         id="fullname"
                         name="name"
                         type="text"
@@ -39,6 +40,7 @@
                 >
                 <div class="mt-2">
                     <input
+                        v-model="user.email"
                         id="email"
                         name="email"
                         type="email"
@@ -59,6 +61,7 @@
                 </div>
                 <div class="mt-2">
                     <input
+                        v-model="user.password"
                         id="password"
                         name="password"
                         type="password"
@@ -67,6 +70,24 @@
                         class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                 </div>
+            </div>
+            <div class="flex items-center justify-between">
+                <label
+                    for="password_confirmation"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                    >Password Confirmation</label
+                >
+            </div>
+            <div class="mt-2">
+                <input
+                    v-model="user.password_confirmation"
+                    id="password_confirmation"
+                    name="password_confirmation"
+                    type="password"
+                    autocomplete="current-password-confirmation"
+                    required="true"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
             </div>
 
             <div>
@@ -92,8 +113,22 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: "Register",
+<script setup>
+import store from "../store";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const user = {
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
 };
+
+function register(ev) {
+    ev.preventDefault();
+    store.dispatch("register", user).then((res) => {
+        router.push({ name: "Dashboard" });
+    });
+}
 </script>
