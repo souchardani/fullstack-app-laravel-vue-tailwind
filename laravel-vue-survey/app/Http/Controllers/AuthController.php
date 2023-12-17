@@ -59,4 +59,16 @@ class AuthController extends Controller
             "token" => $token,
         ]);
     }
+
+
+    public function logout(Request $request){
+
+
+        $user = Auth::user();
+        $user->currentAccessToken()->delete();
+        //revoca el token que se esta usando para autenticar al usuario actualmente
+        return response([
+            "success" => true
+        ]);
+    }
 }
